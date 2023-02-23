@@ -1,0 +1,29 @@
+{% extends 'learning_logs/base.html' %}
+
+{% block page_header %}
+  <h3>{{ topic }}</h3>
+{% endblock page_header %}
+
+{% block content %}
+  
+  <p>条目:</p>
+  <p>
+    <a href="{% url 'learning_logs:new_entry' topic.id %}">添加新的条目</a>
+  </p>
+  <ul>
+  {% for entry in entries%}
+    <div class="card mb-3">
+      <h4 class="card-header">
+        {{ entry.date_added|date:'M d, Y H:i' }}      
+        <small><a href="{% url 'learning_logs:edit_entry' entry.id %}">请编辑此条目</a></small>
+        </h4>
+        <div class="card-body">
+          {{ entry.text|linebreaks }}
+        </div>
+    </div>
+  {% empty %}
+    <p>你并没有在这个主题里添加任何条目。</p>
+  {% endfor %}
+  </ul>
+
+{% endblock content %}
